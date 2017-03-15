@@ -76,37 +76,38 @@ public class UserDataDAO {
         {
             con = DBManager.getConnection();
             
-//            String sql = "update user_t set name = " + "'" + updateData.getName() + "'";
-//            java.sql.Date sqlDate = new java.sql.Date(updateData.getBirthday().getTime());
-//            sql += ",birthday = " +  "'" + sqlDate.toString() + "'";
-//            sql += ",tell = " + "'" + updateData.getTell()+ "'";
-//            sql += ",type = " + updateData.getType();
-//            sql += ",comment = "  + "'" + updateData.getComment()+ "'";
-//            sql += ",newDate = "  + new Timestamp(System.currentTimeMillis());
-//            sql += " where userID = " + updateData.getUserID() + ';';
-//            st =  con.prepareStatement(sql);
-//            int num = st.executeUpdate();
-            String sql = "update user_t set name = " + "'?'";
+            String sql = "update user_t set name = " + "'" + updateData.getName() + "'";
             java.sql.Date sqlDate = new java.sql.Date(updateData.getBirthday().getTime());
-            sql += ",birthday = " +  "?";
-            sql += ",tell = " + "'?'";
-            sql += ",type = '?'";
-            sql += ",comment = "  + "'?'";
-            sql += ",newDate = ?";
-            sql += " where userID = ?";
-            
-            
-            
+            sql += ",birthday = " +  "'" + sqlDate.toString() + "'";
+            sql += ",tell = " + "'" + updateData.getTell()+ "'";
+            sql += ",type = " + updateData.getType();
+            sql += ",comment = "  + "'" + updateData.getComment()+ "'";
+            String strNewDate = new Timestamp(System.currentTimeMillis()).toString();
+            sql += ",newDate = "  + "'" + new Timestamp(System.currentTimeMillis()).toString()+ "'";
+            sql += " where userID = " + updateData.getUserID() + ';';
             st =  con.prepareStatement(sql);
-            st.setString(1, updateData.getName());
-            st.setDate(2, sqlDate);
-            st.setString(3, updateData.getTell());
-            st.setInt(4, updateData.getType());
-            st.setString(5, updateData.getComment());
-            st.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
-            st.setInt(7, updateData.getUserID());
-
             int num = st.executeUpdate();
+//            String sql = "update user_t set name = " + "'?'";
+//            java.sql.Date sqlDate = new java.sql.Date(updateData.getBirthday().getTime());
+//            sql += ",birthday = " +  "?";
+//            sql += ",tell = " + "'?'";
+//            sql += ",type = ?";
+//            //sql += ",comment = " + "'?'";
+//            sql += ",comment = ?";
+//            sql += ",newDate = ?";
+//            sql += " where userID = ?";
+//            
+//            
+//            st =  con.prepareStatement(sql);
+//            st.setString(1, updateData.getName());
+//            st.setDate(2, sqlDate);
+//            st.setString(3, updateData.getTell());
+//            st.setInt(4, updateData.getType());
+//            st.setString(5,updateData.getComment());
+//            st.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
+//            st.setInt(7, updateData.getUserID());
+
+            //int num = st.executeUpdate();
             
             sql = "SELECT * FROM user_t where userID =" + updateData.getUserID() ;
             st =  con.prepareStatement(sql);
@@ -168,7 +169,8 @@ public class UserDataDAO {
         }
         finally
         {
-            if(con != null){
+            if(con != null)
+            {
                 con.close();
             }
         }
@@ -187,7 +189,6 @@ public class UserDataDAO {
         try
         {
             con = DBManager.getConnection();
-            
             //
             String sql = "SELECT * FROM user_t";
             boolean flag = false;
@@ -268,11 +269,16 @@ public class UserDataDAO {
             System.out.println("search completed");
 
             return resultUd;
-        }catch(SQLException e){
+        }
+        catch(SQLException e)
+        {
             System.out.println(e.getMessage());
             throw new SQLException(e);
-        }finally{
-            if(con != null){
+        }
+        finally
+        {
+            if(con != null)
+            {
                 con.close();
             }
         }
